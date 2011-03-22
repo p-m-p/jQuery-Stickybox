@@ -1,0 +1,38 @@
+#main { width: 500px; margin: 0 25px 0 0; float: left; }
+#side {
+  width: 275px;
+  float: left;
+}
+#basket {
+  border: solid 1px silver;
+  -moz-border-radius: 12px;
+  -webkit-border-radius: 12px;
+  border-radius: 12px;
+  padding: 10px;
+  background: white;
+}
+#basket h3 {
+  margin: 0 0 15px 0;
+}
+#basket p { margin: 32px 0 0 0; text-align: right; font-size: 1.2em; }
+#items { 
+  position: absolute; 
+  top: 0px; 
+  right: 6px;
+  font-size: 1.4em;
+  font-weight: bold;
+  padding: 14px 38px 8px 6px;
+  background: url(images/cart.png) right top no-repeat;
+}
+#products { margin: 0; padding: 0; }
+#products li {
+  width: 126px;
+  margin: 0 25px 25px 0;
+  float: left;
+  padding: 10px;
+  border: solid 2px #ddd;
+  -moz-border-radius: 12px;
+  -webkit-border-radius: 12px;
+  border-radius: 12px;
+  text-align: center;
+}
