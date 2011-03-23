@@ -63,6 +63,10 @@
           .animate({top: orig.top}, settings.timer, settings.easing);
     }
     
+    var findPositionedParent = function () {
+        
+    }
+    
     setPositions();
     $(window).bind("resize", setPositions);
     settings.container.bind("scroll", moveIntoView);
