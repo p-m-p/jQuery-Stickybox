@@ -3,20 +3,19 @@
   $.fn.stickySidebar = function (opts) {
 
     var _self = $(this)
+        $window = $(window)
       , offs = {} // our parents offset 
       , orig = { // cache for original css
-            left: 0 
-          , top: 0
+            top: (isNaN(_self.css("top")) ? 0 : _self.css("top"))
+          , left: _self.css("left")
           , position: _self.css("position")
           , marginTop: _self.css("marginTop")
           , marginLeft: _self.css("marginLeft")
         } 
       , settings = $.extend({
-            speed: 0 // animation duration
+            speed: 150 // animation duration
           , easing: "linear" // use easing plugin for more opts
         }, opts);
-
-    settings.container = $(settings.container);
 
     var setPositions = function () {
       // set position according to nearest postioned container
@@ -32,7 +31,7 @@
     }
 
     var moveIntoView = function (ev) {
-      var sTop = settings.container.scrollTop() - offs.top;
+      var sTop = $window.scrollTop() - offs.top;
       // scrolled down out of view
       if (orig.top < sTop) { 
         _self
@@ -74,8 +73,8 @@
     }
     
     setPositions();
-    $(window).bind("resize", reset);
-    settings.container.bind("scroll", moveIntoView);
+    $window.bind("resize", reset);
+    $window.bind("scroll", moveIntoView);
 
   }
 
