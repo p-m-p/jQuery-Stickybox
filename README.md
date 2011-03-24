@@ -8,10 +8,10 @@ Usage
 
   Currently only supports one element
 
-    `$(*your elem*).stickySidebar()`
+    $(*your elem*).stickySidebar()
 
 Options
 ---
 
-* speed - the duration of the animation
-* easing - the easing to use for the animation
+* speed (default = 150) - the duration of the animation
+* easing (default = 'linear') - the easing to use for the animation
