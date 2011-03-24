@@ -34,7 +34,7 @@
     <script src="js/stickysidebar.jquery.js"></script>
     <script>
       $(function () {
-        $("#side").stickySidebar({
+        $("#basket").stickySidebar({
             timer: 400
           , easing: "easeInOutBack"
         });

@@ -1,7 +1,9 @@
+#wrap { width: 800px; margin: 0 auto; }
 #main { width: 500px; margin: 0 25px 0 0; float: left; }
 #side {
   width: 275px;
   float: left;
+  position: relative;
 }
 #basket {
   border: solid 1px silver;
@@ -24,7 +26,7 @@
   padding: 14px 38px 8px 6px;
   background: url(images/cart.png) right top no-repeat;
 }
-#products { margin: 0; padding: 0; }
+#products { margin: 0; padding: 0; list-style: none;}
 #products li {
   width: 126px;
   margin: 0 25px 25px 0;
@@ -36,3 +38,4 @@
   border-radius: 12px;
   text-align: center;
 }
+.end { margin-right: 0 !important }
