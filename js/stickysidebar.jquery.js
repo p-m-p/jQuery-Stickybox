@@ -3,8 +3,8 @@
   $.fn.stickySidebar = function (opts) {
 
     var _self = $(this)
-      , offs = { left: 0, top: 0 } // default offset is to document
-      , orig = {
+      , offs = {} // our parents offset 
+      , orig = { // cache for original css
             left: 0 
           , top: 0
           , position: _self.css("position")
@@ -12,17 +12,14 @@
           , marginLeft: _self.css("marginLeft")
         } 
       , settings = $.extend({
-            container: document // the scolling parent
-          , timer: 250 // how often to update
-          , delay: 0 // how long to wait before update
-          , easing : "linear"
+            speed: 0 // animation duration
+          , easing: "linear" // use easing plugin for more opts
         }, opts);
 
     settings.container = $(settings.container);
 
     var setPositions = function () {
-      var currOff = _self.offset();
-      // set position according to container
+      // set position according to nearest postioned container
       offs = findPositionedParent();
       _self.css({
           position: "absolute"
@@ -36,23 +33,25 @@
 
     var moveIntoView = function (ev) {
       var sTop = settings.container.scrollTop() - offs.top;
-      if (orig.top < sTop) { // scrolled in the container
+      // scrolled down out of view
+      if (orig.top < sTop) { 
         _self
           .stop()
-          .delay(settings.delay)
           .animate(
               {top: sTop + 10 + "px"}
-            , settings.timer
+            , settings.speed
             , settings.easing
           );
-      } else if (_self.offset().top > orig.top) // scolled back up to top
+      }
+      // scolled back up past original offset
+      else if (_self.offset().top > orig.top) 
         _self
           .stop()
-          .delay(settings.delay)
-          .animate({top: orig.top}, settings.timer, settings.easing);
+          .animate({top: orig.top}, settings.speed, settings.easing);
     }
     
     var findPositionedParent = function () {
+      // start with current parent
       var $parent = _self.parent()
         , parentOffs = $parent.offset();
       // go up the tree until we find an elem to position from
@@ -60,9 +59,9 @@
         $parent = $parent.parent();
         parentOffs = $parent.offset();
       }
-      if (parentOffs)
+      if (parentOffs) // found a postioned ancestor
         return parentOffs;
-      else return { top: 0, left: 0 };
+      else return { top: 0, left: 0 }; // ooops went to far set to doc
     }
 
     var reset = function () {
