@@ -1,14 +1,17 @@
 jQuery static sidebar plugin.
 =============================
 
-  Simple lightweight plugin for adding a "follow me" sidebar that follows the user down the page as they scroll.
+  Simple lightweight plugin for adding a "follow me" sidebar that follows
+  the user down the page as they scroll.
 
 Usage
 ---
 
-  Currently only supports one element
+  Supports multiple objects - no specific css is required as it will
+  position elements according to original offset and closest positioned
+  ancestor.
 
-    $(*your elem*).stickySidebar()
+    $(selector).stickySidebar(options)
 
 Options
 ---
