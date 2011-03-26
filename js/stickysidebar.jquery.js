@@ -14,7 +14,7 @@
       var _self = $(this);
       this.offs = {}; // our parents offset 
       this.orig = { // cache for original css
-          top: (isNaN(parseInt(_self.css("top"))) ? 0 : _self.css("top"))
+          top: _self.css("top")
         , left: _self.css("left")
         , position: _self.css("position")
         , marginTop: _self.css("marginTop")
