@@ -1,5 +1,5 @@
 #wrap { width: 800px; margin: 0 auto; }
-#main { width: 500px; margin: 0 25px 0 0; float: left; }
+#main { width: 500px; height: 1800px; margin: 0 25px 0 0; float: left; }
 #side {
   width: 275px;
   float: left;
@@ -12,6 +12,7 @@
   border-radius: 12px;
   padding: 10px;
   background: white;
+  position: relative;
 }
 #basket h3 {
   margin: 0 0 15px 0;
@@ -39,3 +40,29 @@
   text-align: center;
 }
 .end { margin-right: 0 !important }
+
+/* =Multi page demo
+--------------------------------------------------------------------------*/
+#left, #right { width: 200px; float: left; }
+#middle { width: 400px; float: left; height: 2000px; }
+#navbox { 
+  list-style: none;
+  margin: 100px 0 0;
+  padding: 10px 10px 0 10px;
+  border: solid 1px silver;
+}
+#navbox li {
+  margin: 0 0 10px 0;
+}
+
+#realtest { position: absolute; left: 20px; top: 450px; }
+#floatedbox {
+  width: 150px;
+  height: 150px;
+  background-color: white; 
+  position: absolute; 
+  top: 10px; 
+  left: 20px; 
+  border: solid 1px silver;
+  padding: 10px;
+}
