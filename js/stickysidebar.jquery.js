@@ -33,7 +33,6 @@
           , margin: 0
           , width: _self.width()
         });
-        console.log(this.orig);
         this.moveIntoView();
       }
 
