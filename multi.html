@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>jQuery stickysidebar plugin</title>
+  <link href='http://fonts.googleapis.com/css?family=Yanone+Kaffeesatz:extralight,light,regular,bold' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="../style/default.css" media="screen" />
+    <link rel="stylesheet" href="style/sticky.css" media="screen" />
+  </head>
+  <body>
+    <div id="realtest">
+      <div id="innerposi">
+        <div id="floatedbox" class="stickybox">Floated box</div>
+      </div>
+    </div>
+    <div id="wrap">
+      <header>
+        <h1>jQuery Sticky Sidebar</h1>
+        <div id="left">
+        <h2>Left column</h2>
+          <ol id="navbox" class="stickybox">
+            <li><a href="#">Home</a></li>
+            <li><a href="#">About</a></li>
+            <li><a href="#">Contact</a></li>
+          </ol>
+        </div>
+        <div id="middle"></div>
+        <div id="right">
+          <h2>Right column</h2>
+          <div id="basket" class="stickybox">
+            <h3>Your basket</h3>
+            <p>Total: <strong>&pound;455.00</strong></p>
+            <span id="items">4</span>
+          </div>
+        </div>
+    </div>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.min.js"></script>
+    <script src="js/jquery.easing.1.3.js"></script>
+    <script src="js/stickysidebar.jquery.js"></script>
+    <script>
+      $(function () {
+        $(".stickybox").stickySidebar({
+            speed: 400
+          , easing: "easeInOutQuad"
+        });
+      });
+    </script>
+  </body>
+</html>

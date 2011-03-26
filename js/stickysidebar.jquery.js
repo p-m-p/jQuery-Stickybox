@@ -7,6 +7,7 @@
       , settings = $.extend({
           speed: 350 // animation duration
         , easing: "linear" // use easing plugin for more options
+        , padding: 10
       }, opts);
 
     this.each( function () {
