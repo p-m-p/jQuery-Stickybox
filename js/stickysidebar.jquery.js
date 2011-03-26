@@ -47,7 +47,7 @@
           _self
             .stop()
             .animate(
-                {top: sTop + 10 + "px"}
+                {top: sTop + settings.padding + "px"}
               , settings.speed
               , settings.easing
             );
