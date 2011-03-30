@@ -103,6 +103,8 @@
       for (var i = 0, sbl = stickyboxes.length; i < sbl; ++i)
         stickyboxes[i].moveIntoView();
     });
+    
+    return this;
 
   }
 
