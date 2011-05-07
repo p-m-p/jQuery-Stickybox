@@ -1,111 +1,164 @@
 (function ($) {
+	
+	var settings = {
+		      speed: 350 // animation duration
+		    , easing: "linear" // use easing plugin for more options
+		    , padding: 10
+		  }
+		,	$window = $(window)
+		,	stickyboxes = []
+		,	methods = {
+		
+					init: function (opts) {
+				    settings = $.extend(settings, opts)
+				    return this.each( function () {
+				      var $this = $(this);
+							setPosition($this);
+							stickyboxes[stickyboxes.length] = $this;
+							moveIntoView();
+				    });
+					}
+					
+				, remove: function () {
+						return this.each (function () {
+							var self = this;
+							$.each(stickyboxes, function (i, $sb) {
+								if ($sb.get(0) === self) {
+                  reset(null, $sb);
+                  stickyboxes.splice(i, 1);
+                  return false;
+                }
+              });
+            });
+          }
 
-  $.fn.stickySidebar = function (opts) {
-
-    var stickyboxes = []
-      , $window = $(window)
-      , settings = $.extend({
-          speed: 350 // animation duration
-        , easing: "linear" // use easing plugin for more options
-        , padding: 10
-      }, opts);
-
-    this.each( function () {
-      
-      var _self = $(this);
-      this.offs = {}; // our parents offset 
-      this.orig = { // cache for original css
-          top: _self.css("top")
-        , left: _self.css("left")
-        , position: _self.css("position")
-        , marginTop: _self.css("marginTop")
-        , marginLeft: _self.css("marginLeft")
-        , offset: _self.offset()
-      };   
-
-      this.setPositions = function () {
-        // set position according to nearest postioned container
-        var currOff = _self.offset();
-        this.offs = findPositionedParent();
-        _self.css({
-            position: "absolute"
-          , top: currOff.top - this.offs.top + "px"
-          , left: currOff.left - this.offs.left + "px"
-          , margin: 0
-          , width: _self.width()
-        });
-        this.moveIntoView();
-      }
-
-      this.moveIntoView = function (ev) {
-        var elem = _self.get(0)
-          , sTop = $window.scrollTop() - elem.offs.top
-          , currOffs = _self.offset()
-          , origTop = elem.orig.offset.top - elem.offs.top;
+        , destroy: function () {
+            $.each(stickyboxes, function (i, $sb) {
+              reset(null, $sb);
+            });
+            stickyboxes = [];
+            $window.unbind("scroll", moveIntoView);
+            $window.unbind("resize", reset);
+            return this;
+          }
+				
+			};
+	
+	
+	var moveIntoView = function () {
+		$.each(stickyboxes, function (i, $sb) {
+			var $this = $sb
+				, data = $this.data("stickySB");
+			if (data) {
+				var sTop = $window.scrollTop() - data.offs.top
+          , currOffs = $this.offset()
+          , origTop = data.orig.offset.top - data.offs.top
+          , animTo = origTop;
         // scrolled down out of view
         if (origTop < sTop) { 
-          _self
-            .stop()
-            .animate(
-                {top: sTop + settings.padding + "px"}
-              , settings.speed
-              , settings.easing
-            );
+        	if (sTop > data.offs.bottom) // stop inside parent
+            animTo = data.offs.bottom;
+          else animTo = sTop + settings.padding;
         }
-        // scolled back up past original offset
-        else if (currOffs.top > origTop) 
-          _self
-            .stop()
-            .animate(
-                {top: origTop}
-              , settings.speed
-              , settings.easing
-            );
+        $this
+          .stop()
+          .animate(
+              {top: animTo}
+            , settings.speed
+            , settings.easing
+          );
+       }
+		});
+	}
+	
+	var setPosition = function ($sb) {
+		if ($sb) {
+			var $this = $sb
+				,	$parent = $this.parent()
+	      , parentOffs = $parent.offset()
+	      , currOff = $this.offset()
+				,	data = $this.data("stickySB");
+      if (!data) {
+      	data = {
+      			offs: {} // our parents offset 
+      		,	orig: { // cache for original css
+		          	top: $this.css("top")
+			        , left: $this.css("left")
+			        , position: $this.css("position")
+			        , marginTop: $this.css("marginTop")
+			        , marginLeft: $this.css("marginLeft")
+			        , offset: $this.offset()
+		      	}
+      	}
       }
-      
-      var findPositionedParent = function () {
-        // start with current parent
-        var $parent = _self.parent()
-          , parentOffs = $parent.offset();
-        // go up the tree until we find an elem to position from
-        while (parentOffs && "top" in parentOffs
-          && $parent.css("position") == "static") {
-          $parent = $parent.parent();
-          parentOffs = $parent.offset();
-        }
-        if (parentOffs) // found a postioned ancestor
-          return parentOffs;
-        else return { top: 0, left: 0 }; // ooops went to far set to doc
+			// go up the tree until we find an elem to position from
+      while (parentOffs && "top" in parentOffs
+        && $parent.css("position") == "static") {
+        $parent = $parent.parent();
+        parentOffs = $parent.offset();
       }
-
-      this.reset = function () {
-        _self.css({
-            position: this.orig.position
-          , marginTop: this.orig.marginTop
-          , marginLeft: this.orig.marginLeft
-          , left: this.orig.left
-          , top: this.orig.top
+      if (parentOffs) { // found a postioned ancestor
+      	var padBtm = parseInt($parent.css("paddingBottom"));
+      	padBtm = isNaN(padBtm) ? 0 : padBtm;
+        data.offs = parentOffs;
+        data.offs.bottom =
+          Math.abs(($parent.innerHeight() - padBtm) - $this.outerHeight());
+      }
+      else data.offs = { // went to far set to doc
+      		top: 0
+      	, left: 0
+      	, bottom: $(document).height() 
+      }; 
+       
+      $this.css({
+          position: "absolute"
+        , top: Math.floor(currOff.top - data.offs.top) + "px"
+        , left: Math.floor(currOff.left - data.offs.left) + "px"
+        , margin: 0
+        , width: $this.width()
+      }).data("stickySB", data);
+			
+		}
+		
+	}
+	
+	var reset = function (ev, $toReset) {
+		var stickies = stickyboxes;
+		if ($toReset) { // just resetting selected items
+			stickies = [$toReset];
+		}
+		$.each(stickies, function (i, $sb) {
+      var data = $sb.data("stickySB");
+      if (data) {
+        $sb.css({
+            position: data.orig.position
+          , marginTop: data.orig.marginTop
+          , marginLeft: data.orig.marginLeft
+          , left: data.orig.left
+          , top: data.orig.top
         });
-      }
-      
-      this.setPositions();
-      stickyboxes[stickyboxes.length] = this;
-
-    });
-
-    $window.bind("resize", function () {
-      for (var i = 0, sbl = stickyboxes.length; i < sbl; ++i)
-        stickyboxes[i].reset();
-      for (i = 0; i < sbl; ++i)
-        stickyboxes[i].setPositions();
-    });
-    $window.bind("scroll", function () {
-      for (var i = 0, sbl = stickyboxes.length; i < sbl; ++i)
-        stickyboxes[i].moveIntoView();
-    });
-    
-    return this;
-
+        if (!$toReset) { // just resetting
+          setPosition($sb);
+          moveIntoView();
+        }
+			}
+		});
   }
-
+  
+  $window.bind("scroll", moveIntoView);
+	$window.bind("resize", reset);
+	
+	$.fn.stickySidebar = function (method) {
+		
+		if (methods[method]) {
+			return methods[method].apply(
+          this
+        , Array.prototype.slice.call(arguments, 1)
+      );
+		} else if (typeof method == "object") {
+			return methods.init.apply(this, arguments);
+		}
+		
+	}
+	
 })(jQuery);

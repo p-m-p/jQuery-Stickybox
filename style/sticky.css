@@ -1,5 +1,5 @@
 #wrap { width: 800px; margin: 0 auto; }
-#main { width: 500px; height: 1800px; margin: 0 25px 0 0; float: left; }
+#main { width: 500px; margin: 0 25px 0 0; float: left; }
 #side {
   width: 275px;
   float: left;
@@ -43,19 +43,35 @@
 
 /* =Multi page demo
 --------------------------------------------------------------------------*/
-#left, #right { width: 200px; float: left; }
+#right { width: 200px; float: left; }
+#left { 
+		width: 178px; 
+		height: 800px; 
+		float: left; 
+		border: solid 1px red; 
+		position: relative;
+		padding: 10px;
+}
 #middle { width: 400px; float: left; height: 2000px; }
 #navbox { 
   list-style: none;
-  margin: 100px 0 0;
+  margin: 0;
   padding: 10px 10px 0 10px;
   border: solid 1px silver;
+  height: 200px;
 }
 #navbox li {
   margin: 0 0 10px 0;
 }
 
-#realtest { position: absolute; left: 20px; top: 450px; }
+#realtest { 
+	position: absolute; 
+	left: 20px; 
+	top: 450px; 
+	height: 300px; 
+	width: 300px; 
+	border: solid 2px black;
+}
 #floatedbox {
   width: 150px;
   height: 150px;

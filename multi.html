@@ -23,7 +23,22 @@
             <li><a href="#">Contact</a></li>
           </ol>
         </div>
-        <div id="middle"></div>
+        <div id="middle">
+          <ul>
+            <li>
+              <a href="#" class="remove" rel="navbox">Remove nav box</a>
+            </li>
+            <li>
+              <a href="#" class="remove" rel="basket">Remove basket</a>
+            </li>
+            <li>
+              <a href="#" class="remove" rel="floatedbox">Remove box</a>
+            </li>
+            <li>
+              <a href="#" id="destroyAll">Destroy all</a>
+            </li>
+          </ul>
+        </div>
         <div id="right">
           <h2>Right column</h2>
           <div id="basket" class="stickybox">
@@ -42,6 +57,15 @@
             speed: 400
           , easing: "easeInOutQuad"
         });
+        $(".remove").click(function (ev) {
+          ev.preventDefault();
+          $("#" + this.rel).stickySidebar("remove");
+        });
+        $("#destroyAll").click(function (ev) {
+          ev.preventDefault();
+          $(".stickybox").stickySidebar("destroy");
+        });
+
       });
     </script>
   </body>
