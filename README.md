@@ -23,10 +23,10 @@ Options
 Methods
 ---
 
-  * remove - removes the selected sticky boxes
+  remove - removes the selected sticky boxes
 
     $(selector).stickySidebar("remove")
 
-  * destroy - removes all sticky boxes and event listeners
+  destroy - removes all sticky boxes and event listeners
 
     $(selector).stickySidebar("destroy")
