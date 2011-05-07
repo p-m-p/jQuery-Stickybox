@@ -19,3 +19,14 @@ Options
 * speed (default = 150) - the duration of the animation
 * easing (default = 'linear') - the easing to use for the animation
 * padding (default = 10) - amount of padding from top of window
+
+Methods
+---
+
+* remove - removes the selected sticky boxes
+
+    $(selector).stickySidebar("remove")
+
+* destroy - removes all sticky boxes and event listeners
+
+    $(selector).stickySidebar("destroy")
