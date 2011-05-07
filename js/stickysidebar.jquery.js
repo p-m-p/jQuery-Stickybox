@@ -4,6 +4,7 @@
         speed: 350 //animation duration
       , easing: "linear" //use easing plugin for more options
       , padding: 10
+      , constrain: false
     }
     , $window = $(window)
     , stickyboxes = []
@@ -101,8 +102,9 @@
         var padBtm = parseInt($parent.css("paddingBottom"));
         padBtm = isNaN(padBtm) ? 0 : padBtm;
         data.offs = parentOffs;
-        data.offs.bottom =
-          Math.abs(($parent.innerHeight() - padBtm) - $this.outerHeight());
+        data.offs.bottom = settings.constrain ?
+          Math.abs(($parent.innerHeight() - padBtm) - $this.outerHeight()) :
+          $(document).height();
       }
       else data.offs = { // went to far set to doc
           top: 0

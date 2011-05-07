@@ -1,5 +1,5 @@
 #wrap { width: 800px; margin: 0 auto; }
-#main { width: 500px; margin: 0 25px 0 0; float: left; }
+#main { width: 500px; height: 1500px; margin: 0 25px 0 0; float: left; }
 #side {
   width: 275px;
   float: left;
