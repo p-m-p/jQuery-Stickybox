@@ -154,7 +154,7 @@
           this
         , Array.prototype.slice.call(arguments, 1)
       );
-    } else if (typeof method == "object") {
+    } else if (!method || typeof method == "object") {
       return methods.init.apply(this, arguments);
     }
 
