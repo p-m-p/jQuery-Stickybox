@@ -57,7 +57,8 @@
           , animTo = origTop;
         //scrolled down out of view
         if (origTop < sTop) {
-          if (sTop > data.offs.bottom) //stop inside parent
+					//make sure to stop inside parent
+          if ((sTop + settings.padding) > data.offs.bottom)
             animTo = data.offs.bottom;
           else animTo = sTop + settings.padding;
         }
