@@ -5,6 +5,7 @@
       , easing: "linear" //use easing plugin for more options
       , padding: 10
       , constrain: false
+      , stopBefore: null
     }
     , $window = $(window)
     , stickyboxes = []
@@ -58,9 +59,13 @@
         //scrolled down out of view
         if (origTop < sTop) {
 					//make sure to stop inside parent
-          if ((sTop + settings.padding) > data.offs.bottom)
+          console.log((sTop + settings.padding), data.offs.bottom);
+          if ((sTop + settings.padding) > data.offs.bottom) {
             animTo = data.offs.bottom;
-          else animTo = sTop + settings.padding;
+          }
+          else {
+            animTo = sTop + settings.padding;
+          }
         }
         $this
           .stop()
@@ -100,12 +105,19 @@
         parentOffs = $parent.offset();
       }
       if (parentOffs) { // found a postioned ancestor
-        var padBtm = parseInt($parent.css("paddingBottom"));
+        var padBtm = parseInt($parent.css("paddingBottom"), 10);
         padBtm = isNaN(padBtm) ? 0 : padBtm;
         data.offs = parentOffs;
-        data.offs.bottom = settings.constrain ?
-          Math.abs(($parent.innerHeight() - padBtm) - $this.outerHeight()) :
-          $(document).height();
+
+        if (settings.stopBefore != null) {
+          data.offs.bottom = $(settings.stopBefore).offset().top - $this.outerHeight() - data.offs.top - settings.padding;
+        }
+        else if (settings.constrain) {
+          data.offs.bottom = Math.abs(($parent.innerHeight() - padBtm) - $this.outerHeight());
+        }
+        else {
+          data.offs.bottom = $(document).height();
+        }
       }
       else data.offs = { // went to far set to doc
           top: 0

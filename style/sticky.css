@@ -82,3 +82,11 @@
   border: solid 1px silver;
   padding: 10px;
 }
+#stop-before {
+  position: absolute;
+  top: 800px;
+  width: 100%;
+  height: 600px;
+  background: red;
+  opacity: 0.4;
+}
