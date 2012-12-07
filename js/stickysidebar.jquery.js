@@ -5,6 +5,7 @@
       , easing: "linear" //use easing plugin for more options
       , padding: 10
       , constrain: false
+      , offset: 0
     }
     , $window = $(window)
     , stickyboxes = []
@@ -51,7 +52,7 @@
       var $this = $sb
         , data = $this.data("stickySB");
       if (data) {
-        var sTop = $window.scrollTop() - data.offs.top
+        var sTop = $window.scrollTop() - data.offs.top + settings.offset
           , currOffs = $this.offset()
           , origTop = data.orig.offset.top - data.offs.top
           , animTo = origTop;
